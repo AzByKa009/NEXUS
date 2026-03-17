@@ -618,7 +618,12 @@ fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/releases/late
   .catch(() => {})
 
 function download() {
-  window.open(downloadUrl, '_blank')
+  const a = document.createElement('a')
+  a.href = downloadUrl
+  a.download = 'AI-Shtab-Setup.exe'
+  document.body.appendChild(a)
+  a.click()
+  document.body.removeChild(a)
 }
 
 // ── Reveal on scroll ──
