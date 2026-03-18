@@ -20,9 +20,9 @@
   --t1: #f9f9f9;
   --t2: #a0a0a0;
   --t3: #5e5e5e;
-  --ac: #7C3AED;
-  --ac2: #8B5CF6;
-  --ac3: #A78BFA;
+  --ac: #4aa8d8;
+  --ac2: #bde2f3;
+  --ac3: #e8f5fb;
   --font: 'Inter', -apple-system, sans-serif;
 }
 
@@ -30,13 +30,13 @@ html{scroll-behavior:smooth}
 body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-font-smoothing:antialiased;overflow-x:hidden}
 a{color:inherit;text-decoration:none}
 button{cursor:pointer;font-family:var(--font)}
-::selection{background:rgba(139,92,246,.3)}
+::selection{background:rgba(189,226,243,.3)}
 
 /* ── NAV ── */
 .nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(11,11,11,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--b1)}
 .nav-inner{max-width:1200px;margin:0 auto;padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between}
 .nav-logo{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:700;letter-spacing:-.03em}
-.nav-logo-mark{width:28px;height:28px;border-radius:7px;background:var(--ac);display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:800}
+.nav-logo-mark{width:28px;height:28px;border-radius:7px;background:#1a1a1a;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:800}
 .nav-links{display:flex;align-items:center;gap:28px}
 .nav-links a{font-size:13px;color:var(--t3);font-weight:500;letter-spacing:-.01em;transition:color .2s}
 .nav-links a:hover{color:var(--t1)}
@@ -79,8 +79,8 @@ h1 em{font-style:normal;color:var(--ac2)}
 .hs-msg-avatar.a{background:var(--ac)}
 .hs-msg-bubble{padding:8px 12px;border-radius:8px;font-size:10.5px;line-height:1.5;max-width:80%}
 .hs-msg-bubble.u{background:var(--s3);color:var(--t2)}
-.hs-msg-bubble.a{background:rgba(124,58,237,.12);border:1px solid rgba(124,58,237,.2);color:var(--t1)}
-.hs-chip{display:inline-flex;align-items:center;gap:5px;padding:3px 8px;background:rgba(124,58,237,.1);border:1px solid rgba(124,58,237,.2);border-radius:4px;font-size:9px;color:var(--ac3);font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+.hs-msg-bubble.a{background:rgba(74,168,216,.12);border:1px solid rgba(74,168,216,.2);color:var(--t1)}
+.hs-chip{display:inline-flex;align-items:center;gap:5px;padding:3px 8px;background:rgba(74,168,216,.1);border:1px solid rgba(74,168,216,.2);border-radius:4px;font-size:9px;color:var(--ac3);font-weight:600;letter-spacing:.04em;text-transform:uppercase}
 .hs-steps{display:flex;flex-direction:column;gap:5px;padding:8px 10px;background:var(--s2);border:1px solid var(--b1);border-radius:8px}
 .hs-step{display:flex;align-items:center;gap:6px;font-size:9.5px;color:var(--t3)}
 .hs-step-dot{width:5px;height:5px;border-radius:50%;background:var(--ac2);opacity:.6}
@@ -101,7 +101,7 @@ h1 em{font-style:normal;color:var(--ac2)}
 .hf-bar{margin-top:12px;display:flex;gap:3px}
 .hf-bar-item{flex:1;height:28px;border-radius:4px;background:var(--s3)}
 .hf-bar-item.active{background:var(--ac)}
-.hf-bar-item.half{background:rgba(124,58,237,.35)}
+.hf-bar-item.half{background:rgba(74,168,216,.35)}
 
 /* ── LOGOS ── */
 .logos{padding:64px 24px;border-top:1px solid var(--b1);border-bottom:1px solid var(--b1)}
@@ -180,7 +180,7 @@ h1 em{font-style:normal;color:var(--ac2)}
 .footer{padding:44px 24px;border-top:1px solid var(--b1)}
 .footer-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
 .footer-logo{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;letter-spacing:-.03em;color:var(--t3)}
-.footer-logo-mark{width:22px;height:22px;border-radius:5px;background:var(--ac);display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:800}
+.footer-logo-mark{width:22px;height:22px;border-radius:5px;background:#1a1a1a;display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:800}
 .footer-links{display:flex;gap:24px}
 .footer-links a{font-size:12px;color:var(--t3);transition:color .2s;letter-spacing:-.01em}
 .footer-links a:hover{color:var(--t1)}
@@ -236,7 +236,7 @@ h1 em{font-style:normal;color:var(--ac2)}
 <nav class="nav">
   <div class="nav-inner">
     <a href="#" class="nav-logo">
-      <div class="nav-logo-mark">N</div>
+      <div class="nav-logo-mark"><svg width="16" height="16" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><ellipse cx="50" cy="50" rx="38" ry="38" fill="none" stroke="#fff" stroke-width="6"/><path d="M14 38 Q50 28 86 38" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M10 50 Q50 38 90 50" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M14 62 Q50 52 86 62" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M22 76 Q50 68 78 76" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round"/></svg></div>
       NEXUS
     </a>
     <div class="nav-links">
@@ -517,7 +517,7 @@ h1 em{font-style:normal;color:var(--ac2)}
     <div class="review">
       <p class="review-text">«Раньше тратил по 3–4 часа в день на ручной поиск клиентов в Телеграме. Теперь за утренний кофе получаю список из 20+ горячих лидов с уже готовыми сообщениями.»</p>
       <div class="review-author">
-        <div class="review-ava" style="background:linear-gradient(135deg,#7C3AED,#2563eb)"></div>
+        <div class="review-ava" style="background:linear-gradient(135deg,#4aa8d8,#2563eb)"></div>
         <div>
           <div class="review-name">Максим К.</div>
           <div class="review-role">Веб-разработчик, Москва</div>
@@ -527,7 +527,7 @@ h1 em{font-style:normal;color:var(--ac2)}
     <div class="review">
       <p class="review-text">«Агент профилирования — это отдельный кайф. Он буквально читает посты клиента и говорит тебе о чём с ним говорить. Конверсия в ответ выросла в 3 раза.»</p>
       <div class="review-author">
-        <div class="review-ava" style="background:linear-gradient(135deg,#8B5CF6,#ec4899)"></div>
+        <div class="review-ava" style="background:linear-gradient(135deg,#bde2f3,#ec4899)"></div>
         <div>
           <div class="review-name">Алина В.</div>
           <div class="review-role">UI/UX дизайнер, Питер</div>
@@ -580,7 +580,7 @@ h1 em{font-style:normal;color:var(--ac2)}
 <footer class="footer">
   <div class="footer-inner">
     <div class="footer-logo">
-      <div class="footer-logo-mark">N</div>
+      <div class="footer-logo-mark"><svg width="16" height="16" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><ellipse cx="50" cy="50" rx="38" ry="38" fill="none" stroke="#fff" stroke-width="6"/><path d="M14 38 Q50 28 86 38" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M10 50 Q50 38 90 50" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M14 62 Q50 52 86 62" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M22 76 Q50 68 78 76" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round"/></svg></div>
       NEXUS
     </div>
     <div class="footer-links">
