@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Тарифы — NEXUS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+<script>(function(){var t=localStorage.getItem('nexus-theme')||'dark';document.documentElement.setAttribute('data-theme',t)})();</script>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#f0f8fc;--s1:#ffffff;--s2:#e8f5fb;--b1:#d0e8f4;--b2:#bde2f3;
+  --t1:#000000;--t2:#333333;--t3:#666666;
+  --font:'Inter',-apple-system,sans-serif;
+}
+[data-theme="dark"]{
+  --bg:#0a1520;--s1:#0f1e2e;--s2:#14253a;--b1:#1e3352;--b2:#24406a;
+  --t1:#e8f4fc;--t2:#a8c8e0;--t3:#6a9ab8;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{cursor:pointer;font-family:var(--font)}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(240,248,252,.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--b1)}
+[data-theme="dark"] .nav{background:rgba(10,21,32,.92)}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:800;letter-spacing:-.03em;color:var(--t1)}
+.nav-logo svg{color:var(--t1)}
+.nav-back{font-size:13px;color:var(--t3);font-weight:500;transition:color .2s;display:flex;align-items:center;gap:6px}
+.nav-back:hover{color:var(--t1)}
+
+/* THEME TOGGLE */
+.theme-toggle{width:36px;height:36px;border:1px solid var(--b1);border-radius:8px;background:var(--s2);color:var(--t2);display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0;cursor:pointer}
+.theme-toggle:hover{border-color:var(--b2);color:var(--t1)}
+.theme-toggle .icon-sun{display:none}
+.theme-toggle .icon-moon{display:block}
+[data-theme="dark"] .theme-toggle .icon-sun{display:block}
+[data-theme="dark"] .theme-toggle .icon-moon{display:none}
+
+/* DARK TEXT OVERRIDES */
+[data-theme="dark"] .nav-logo,[data-theme="dark"] h1,[data-theme="dark"] h2,
+[data-theme="dark"] .plan-name,[data-theme="dark"] .plan-price,
+[data-theme="dark"] .footer-logo{color:var(--t1)}
+[data-theme="dark"] .nav-back:hover{color:var(--t1)}
+[data-theme="dark"] .plan-card.featured{background:var(--s1);border-color:var(--b2)}
+[data-theme="dark"] .feat-check{color:var(--t2)}
+
+/* WRAP */
+.wrap{max-width:1100px;margin:0 auto;padding:110px 24px 80px}
+
+/* HEADER */
+.page-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border:1px solid var(--b2);border-radius:6px;font-size:11px;font-weight:600;color:var(--t3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:24px;background:var(--s1)}
+.page-badge-dot{width:5px;height:5px;border-radius:50%;background:var(--t1)}
+[data-theme="dark"] .page-badge-dot{background:var(--t3)}
+h1{font-size:42px;font-weight:800;letter-spacing:-.04em;line-height:1.08;text-transform:uppercase;margin-bottom:14px;color:#000}
+.subtitle{font-size:15px;color:var(--t3);margin-bottom:56px;line-height:1.6;max-width:480px}
+
+/* BILLING TOGGLE */
+.billing-toggle{display:flex;align-items:center;gap:12px;margin-bottom:48px}
+.billing-label{font-size:13px;color:var(--t3);font-weight:500}
+.billing-label.active{color:var(--t1);font-weight:600}
+.toggle-switch{position:relative;width:44px;height:24px;background:var(--b1);border-radius:12px;cursor:pointer;transition:background .2s;border:none}
+.toggle-switch.on{background:var(--t1)}
+.toggle-switch::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.toggle-switch.on::after{transform:translateX(20px)}
+.save-badge{padding:3px 8px;background:rgba(34,197,94,.12);color:#16a34a;border:1px solid rgba(34,197,94,.25);border-radius:5px;font-size:11px;font-weight:700;letter-spacing:.02em}
+
+/* PLANS GRID */
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--b1);border:1px solid var(--b1);border-radius:16px;overflow:hidden;margin-bottom:32px}
+@media(max-width:900px){.plans{grid-template-columns:1fr}}
+
+.plan-card{background:var(--s1);padding:36px 32px;display:flex;flex-direction:column;position:relative}
+.plan-card.featured{background:#fff;z-index:1}
+[data-theme="dark"] .plan-featured-label{color:var(--t1)}
+
+.plan-featured-label{position:absolute;top:20px;right:20px;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#000;background:var(--b2);padding:3px 8px;border-radius:5px}
+[data-theme="dark"] .plan-featured-label{background:var(--b1)}
+
+.plan-name{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#000;margin-bottom:20px}
+.plan-price{font-size:44px;font-weight:800;letter-spacing:-.04em;color:#000;line-height:1;margin-bottom:4px}
+.plan-price span{font-size:16px;font-weight:500;color:var(--t3);letter-spacing:0}
+.plan-period{font-size:12px;color:var(--t3);margin-bottom:28px}
+.plan-period s{opacity:.6}
+
+.plan-btn{width:100%;padding:12px;border-radius:9px;font-size:14px;font-weight:600;letter-spacing:-.01em;border:none;cursor:pointer;transition:all .2s;font-family:var(--font);margin-bottom:28px}
+.plan-btn.outline{background:transparent;border:1.5px solid var(--b1);color:var(--t2)}
+.plan-btn.outline:hover{border-color:var(--t1);color:var(--t1)}
+.plan-btn.solid{background:#000;color:#fff}
+[data-theme="dark"] .plan-btn.solid{background:var(--t1);color:#0a1520}
+.plan-btn.solid:hover{opacity:.85}
+
+.plan-divider{height:1px;background:var(--b1);margin-bottom:24px}
+.plan-feats{display:flex;flex-direction:column;gap:10px;flex:1}
+.plan-feat{display:flex;align-items:flex-start;gap:10px;font-size:13px;line-height:1.5;color:var(--t2)}
+.feat-check{flex-shrink:0;margin-top:1px;color:#000}
+[data-theme="dark"] .feat-check{color:var(--t1)}
+.feat-cross{flex-shrink:0;margin-top:1px;color:var(--b2)}
+.feat-muted{color:var(--t3)}
+
+/* PAYMENT NOTE */
+.payment-note{text-align:center;font-size:12px;color:var(--t3);padding:16px;border:1px solid var(--b1);border-radius:10px;background:var(--s2);margin-bottom:40px}
+
+/* FAQ */
+.faq{max-width:680px;margin:0 auto 60px}
+.faq-title{font-size:22px;font-weight:800;letter-spacing:-.03em;margin-bottom:24px;color:var(--t1)}
+.faq-item{border-top:1px solid var(--b1);padding:18px 0}
+.faq-item:last-child{border-bottom:1px solid var(--b1)}
+.faq-q{font-size:14px;font-weight:600;color:var(--t1);margin-bottom:8px}
+.faq-a{font-size:13px;line-height:1.65;color:var(--t3)}
+
+/* FOOTER */
+.footer{padding:44px 24px;border-top:1px solid var(--b1);background:var(--s1)}
+.footer-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.footer-logo{font-size:13px;font-weight:800;letter-spacing:-.03em;color:#000}
+.footer-links{display:flex;gap:24px}
+.footer-links a{font-size:12px;color:var(--t3);transition:color .2s}
+.footer-links a:hover{color:var(--t1)}
+.footer-copy{font-size:12px;color:var(--t3)}
+.footer-inn{font-size:11px;color:var(--t3);opacity:.7}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <svg width="26" height="26" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <clipPath id="nc1"><circle cx="100" cy="100" r="88"/></clipPath>
+        <circle cx="100" cy="100" r="88" fill="none" stroke="currentColor" stroke-width="7"/>
+        <g clip-path="url(#nc1)">
+          <path d="M16 54 Q100 18 184 54" stroke="currentColor" stroke-width="9" fill="none" stroke-linecap="round"/>
+          <path d="M10 78 Q100 44 190 78" stroke="currentColor" stroke-width="9" fill="none" stroke-linecap="round"/>
+          <path d="M10 102 Q100 70 190 102" stroke="currentColor" stroke-width="9" fill="none" stroke-linecap="round"/>
+          <path d="M16 126 Q100 96 184 126" stroke="currentColor" stroke-width="9" fill="none" stroke-linecap="round"/>
+          <path d="M28 150 Q100 124 172 150" stroke="currentColor" stroke-width="9" fill="none" stroke-linecap="round"/>
+          <path d="M50 174 Q100 154 150 174" stroke="currentColor" stroke-width="8" fill="none" stroke-linecap="round"/>
+        </g>
+      </svg>
+      NEXUS
+    </a>
+    <div style="display:flex;align-items:center;gap:12px">
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Тема">
+        <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <a href="index.html" class="nav-back">← На главную</a>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap">
+  <div class="page-badge"><span class="page-badge-dot"></span>Тарифы</div>
+  <h1>Выбери план</h1>
+  <p class="subtitle">Начни бесплатно. Переходи на Pro когда будешь готов масштабировать продажи.</p>
+
+  <div class="billing-toggle">
+    <span class="billing-label active" id="lblMonthly">Ежемесячно</span>
+    <button class="toggle-switch" id="billingToggle" onclick="toggleBilling()"></button>
+    <span class="billing-label" id="lblYearly">Ежегодно</span>
+    <span class="save-badge" id="saveBadge" style="display:none">−20%</span>
+  </div>
+
+  <div class="plans">
+
+    <!-- FREE -->
+    <div class="plan-card">
+      <div class="plan-name">Free</div>
+      <div class="plan-price">0 <span>₽</span></div>
+      <div class="plan-period">Навсегда бесплатно</div>
+      <button class="plan-btn outline" onclick="window.location.href='https://t.me/ATNexus_Bot'">Начать бесплатно</button>
+      <div class="plan-divider"></div>
+      <div class="plan-feats">
+        <div class="plan-feat"><svg class="feat-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>AI чат с агентами</div>
+        <div class="plan-feat"><svg class="feat-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>CRM — до 50 лидов</div>
+        <div class="plan-feat"><svg class="feat-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Поиск каналов</div>
+        <div class="plan-feat"><svg class="feat-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>AI профайлер</div>
+        <div class="plan-feat feat-muted"><svg class="feat-cross" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Авто-ответы</div>
+        <div class="plan-feat feat-muted"><svg class="feat-cross" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Парсинг участников</div>
+        <div class="plan-feat feat-muted"><svg class="feat-cross" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Аутрич-кампании</div>
+      </div>
+    </div>
+
+    <!-- PRO -->
+    <div class="plan-card featured">
+      <div class="plan-featured-label">Популярный</div>
+      <div class="plan-name">Pro</div>
+      <div class="plan-price" id="proPrice">990 <span>₽</span></div>
+      <div class="plan-period" id="proPeriod">в месяц</div>
+      <button class="plan-btn solid" onclick="buyPlan('pro')">Купить Pro</button>
+      <div class="plan-divider"></div>
+      <div class="plan-feats">
+        <div class="plan-feat"><svg class="feat-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Всё из Free</div>
+        <div class="plan-feat"><svg class="feat-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>CRM — до 1000 лидов</div>
+        <div class="plan-feat"><svg class="feat-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Авто-ответы на входящие</div>
+        <div class="plan-feat"><svg class="feat-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Парсинг участников</div>
+        <div class="plan-feat"><svg class="feat-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Аутрич-кампании</div>
+        <div class="plan-feat"><svg class="feat-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>40 сообщений/сутки</div>
+        <div class="plan-feat feat-muted"><svg class="feat-cross" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Несколько аккаунтов TG</div>
+      </div>
+    </div>
+
+    <!-- AGENCY -->
+    <div class="plan-card">
+      <div class="plan-name">Agency</div>
+      <div class="plan-price" id="agencyPrice">2 990 <span>₽</span></div>
+      <div class="plan-period" id="agencyPeriod">в месяц</div>
+      <button class="plan-btn outline" onclick="buyPlan('agency')">Купить Agency</button>
+      <div class="plan-divider"></div>
+      <div class="plan-feats">
+        <div class="plan-feat"><svg class="feat-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Всё из Pro</div>
+        <div class="plan-feat"><svg class="feat-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>CRM — без ограничений</div>
+        <div class="plan-feat"><svg class="feat-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>До 5 Telegram аккаунтов</div>
+        <div class="plan-feat"><svg class="feat-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>200 сообщений/сутки</div>
+        <div class="plan-feat"><svg class="feat-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Приоритетная поддержка</div>
+        <div class="plan-feat"><svg class="feat-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Выгрузка лидов в Excel</div>
+        <div class="plan-feat"><svg class="feat-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>API доступ</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="payment-note">
+    Оплата принимается самозанятым · ИНН 614317719468 · Чек отправляется автоматически
+  </div>
+
+  <!-- FAQ -->
+  <div class="faq">
+    <div class="faq-title">Частые вопросы</div>
+    <div class="faq-item">
+      <div class="faq-q">Могу ли я отменить подписку?</div>
+      <div class="faq-a">Да, в любой момент. Доступ сохраняется до конца оплаченного периода.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Нужны ли свои API ключи?</div>
+      <div class="faq-a">Да — для AI функций нужен бесплатный Groq API Key (console.groq.com). Это занимает 2 минуты.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Что значит «до 40 сообщений в сутки»?</div>
+      <div class="faq-a">Это ограничение на отправку через авто-ответ и аутрич — для защиты от бана Telegram. В Agency лимит увеличен до 200.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Безопасно ли подключать Telegram аккаунт?</div>
+      <div class="faq-a">Да. Сессия отображается в Настройки → Устройства и её можно отключить в любой момент. Мы не читаем переписки и не храним пароли.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Есть ли пробный период для Pro?</div>
+      <div class="faq-a">Пиши @azbyka009 — дам пробный доступ на 7 дней.</div>
+    </div>
+  </div>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-logo">NEXUS</div>
+    <div class="footer-links">
+      <a href="index.html">Главная</a>
+      <a href="privacy.html">Конфиденциальность</a>
+      <a href="https://t.me/azbyka009">Поддержка</a>
+    </div>
+    <span class="footer-copy">© 2025 NEXUS</span>
+    <span class="footer-inn">Самозанятый · ИНН 614317719468</span>
+  </div>
+</footer>
+
+<script>
+function toggleTheme(){
+  var t=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark'
+  document.documentElement.setAttribute('data-theme',t)
+  localStorage.setItem('nexus-theme',t)
+}
+
+let isYearly = false
+
+function toggleBilling(){
+  isYearly = !isYearly
+  const btn = document.getElementById('billingToggle')
+  const lblM = document.getElementById('lblMonthly')
+  const lblY = document.getElementById('lblYearly')
+  const badge = document.getElementById('saveBadge')
+
+  btn.classList.toggle('on', isYearly)
+  lblM.classList.toggle('active', !isYearly)
+  lblY.classList.toggle('active', isYearly)
+  badge.style.display = isYearly ? '' : 'none'
+
+  const proPrice = document.getElementById('proPrice')
+  const proPeriod = document.getElementById('proPeriod')
+  const agencyPrice = document.getElementById('agencyPrice')
+  const agencyPeriod = document.getElementById('agencyPeriod')
+
+  if (isYearly) {
+    proPrice.innerHTML = '792 <span>₽</span>'
+    proPeriod.innerHTML = 'в месяц · <s>990 ₽</s>'
+    agencyPrice.innerHTML = '2 392 <span>₽</span>'
+    agencyPeriod.innerHTML = 'в месяц · <s>2 990 ₽</s>'
+  } else {
+    proPrice.innerHTML = '990 <span>₽</span>'
+    proPeriod.textContent = 'в месяц'
+    agencyPrice.innerHTML = '2 990 <span>₽</span>'
+    agencyPeriod.textContent = 'в месяц'
+  }
+}
+
+function buyPlan(plan) {
+  // Заглушка — сюда подключится ЮKassa
+  window.open('https://t.me/azbyka009', '_blank')
+}
+</script>
+</body>
+</html>
