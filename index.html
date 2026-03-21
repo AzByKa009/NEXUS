@@ -7,6 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+<script>(function(){var t=localStorage.getItem('nexus-theme')||'dark';document.documentElement.setAttribute('data-theme',t)})();</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 
@@ -24,6 +26,12 @@
   --ac2: #1a1a1a;
   --ac3: #333333;
   --font: 'Inter', -apple-system, sans-serif;
+}
+[data-theme="dark"]{
+  --bg:#0a1520;--s1:#0f1e2e;--s2:#14253a;--s3:#1a2f47;
+  --b1:#1e3352;--b2:#24406a;
+  --t1:#e8f4fc;--t2:#a8c8e0;--t3:#6a9ab8;
+  --ac:#e8f4fc;--ac2:#c0dcf0;--ac3:#a8c8e0;
 }
 
 html{scroll-behavior:smooth}
@@ -178,6 +186,7 @@ h1 em{font-style:normal;color:#000;border-bottom:4px solid #bde2f3}
 .footer-links a{font-size:12px;color:var(--t3);transition:color .2s;letter-spacing:-.01em}
 .footer-links a:hover{color:#000}
 .footer-copy{font-size:12px;color:var(--t3)}
+.footer-inn{font-size:11px;color:var(--t3);opacity:.7}
 
 /* ── REVEAL ── */
 .r{opacity:0;transform:translateY(32px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)}
@@ -286,6 +295,78 @@ nav,section,.logos,.strip,.cta,.footer{position:relative;z-index:1}
   .visual-box-body{grid-template-columns:1fr}
   .visual-box-top{flex-direction:column}
 }
+
+/* ── AUTH NAV ── */
+.nav-auth-btn{padding:7px 16px;background:transparent;border:1px solid var(--b2);border-radius:7px;color:var(--t2);font-size:13px;font-weight:600;letter-spacing:-.01em;cursor:pointer;transition:all .2s;white-space:nowrap}
+.nav-auth-btn:hover{border-color:var(--t1);color:var(--t1)}
+[data-theme="dark"] .nav-auth-btn:hover{border-color:var(--t1);color:var(--t1)}
+.nav-user{display:none;align-items:center;gap:10px;font-size:13px}
+.nav-user-name{font-weight:600;color:var(--t1);max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.nav-cabinet-link{font-size:12px;font-weight:600;color:var(--t3);padding:5px 10px;border:1px solid var(--b1);border-radius:6px;transition:all .2s;white-space:nowrap}
+.nav-cabinet-link:hover{color:var(--t1);border-color:var(--b2)}
+.nav-signout{background:none;border:none;font-size:12px;color:var(--t3);cursor:pointer;padding:0;transition:color .2s;font-family:var(--font)}
+.nav-signout:hover{color:var(--t1)}
+
+/* ── AUTH MODAL ── */
+.auth-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);backdrop-filter:blur(4px);z-index:200;display:flex;align-items:center;justify-content:center;padding:24px}
+.auth-box{background:var(--s1);border:1px solid var(--b1);border-radius:16px;padding:36px;width:100%;max-width:400px;position:relative;box-shadow:0 24px 64px rgba(0,0,0,.2)}
+.auth-close{position:absolute;top:16px;right:16px;background:none;border:none;font-size:18px;color:var(--t3);cursor:pointer;padding:4px 8px;border-radius:6px;transition:color .2s;font-family:var(--font);line-height:1}
+.auth-close:hover{color:var(--t1)}
+.auth-title{font-size:22px;font-weight:800;letter-spacing:-.04em;color:var(--t1);margin-bottom:24px}
+.auth-tabs{display:flex;gap:4px;margin-bottom:20px;background:var(--s2);border-radius:8px;padding:3px}
+.auth-tab{flex:1;padding:7px;border:none;border-radius:6px;background:transparent;color:var(--t3);font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;font-family:var(--font)}
+.auth-tab.active{background:var(--s1);color:var(--t1);box-shadow:0 1px 4px rgba(0,0,0,.1)}
+.auth-input{width:100%;padding:11px 14px;border:1px solid var(--b1);border-radius:8px;background:var(--bg);color:var(--t1);font-size:14px;font-family:var(--font);outline:none;transition:border-color .2s;margin-bottom:10px;display:block}
+.auth-input:focus{border-color:var(--b2)}
+.auth-input::placeholder{color:var(--t3)}
+.auth-submit{width:100%;padding:12px;background:var(--t1);border:none;border-radius:8px;color:var(--bg);font-size:14px;font-weight:600;cursor:pointer;transition:opacity .2s;font-family:var(--font);margin-top:4px}
+.auth-submit:hover{opacity:.85}
+.auth-submit:disabled{opacity:.5;cursor:not-allowed}
+.auth-divider{text-align:center;color:var(--t3);font-size:12px;margin:20px 0;position:relative}
+.auth-divider::before,.auth-divider::after{content:'';position:absolute;top:50%;width:38%;height:1px;background:var(--b1)}
+.auth-divider::before{left:0}
+.auth-divider::after{right:0}
+.auth-tg-wrap{display:flex;justify-content:center;min-height:40px;align-items:center}
+.auth-error{color:#ef4444;font-size:12px;margin-top:8px;display:none}
+.auth-success{color:#22c55e;font-size:12px;margin-top:8px;display:none}
+
+/* ── THEME TOGGLE ── */
+.theme-toggle{width:36px;height:36px;border:1px solid var(--b1);border-radius:8px;background:var(--s2);color:var(--t2);display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0}
+.theme-toggle:hover{border-color:var(--b2);color:var(--t1)}
+.theme-toggle .icon-sun{display:none}
+.theme-toggle .icon-moon{display:block}
+[data-theme="dark"] .theme-toggle .icon-sun{display:block}
+[data-theme="dark"] .theme-toggle .icon-moon{display:none}
+
+/* ── DARK OVERRIDES ── */
+[data-theme="dark"] .nav{background:rgba(10,21,32,.92)}
+[data-theme="dark"] .nav-logo,[data-theme="dark"] h1,[data-theme="dark"] h2,
+[data-theme="dark"] .sect-title,[data-theme="dark"] .feat-t,
+[data-theme="dark"] .step-t,[data-theme="dark"] .vb-title,
+[data-theme="dark"] .vb-stat-n,[data-theme="dark"] .review-name,
+[data-theme="dark"] .footer-logo,[data-theme="dark"] .card-title,
+[data-theme="dark"] .cta h2,[data-theme="dark"] .hf-num{color:var(--t1)}
+[data-theme="dark"] .feat-icon svg{color:var(--t1)}
+[data-theme="dark"] .hero-badge-dot,[data-theme="dark"] .hs-step-dot{background:var(--t3)}
+[data-theme="dark"] .nav-btn,[data-theme="dark"] .btn-p,[data-theme="dark"] .tg-btn{background:var(--t1);color:#0a1520}
+[data-theme="dark"] .btn-s{border-color:var(--b2);color:var(--t2)}
+[data-theme="dark"] .btn-s:hover{border-color:var(--t1);color:var(--t1)}
+[data-theme="dark"] .hs-sidebar,[data-theme="dark"] .hs-main{background:var(--s1)}
+[data-theme="dark"] .hs-sitem.active{color:var(--t1)}
+[data-theme="dark"] .hs-chip{color:var(--t1);background:rgba(232,244,252,.06);border-color:rgba(232,244,252,.12)}
+[data-theme="dark"] .vb-stat-fill{background:var(--t1)}
+[data-theme="dark"] .strip-n{background:linear-gradient(135deg,var(--t1) 30%,var(--t2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+[data-theme="dark"] .step-n{background:linear-gradient(135deg,var(--b2) 0%,var(--b1) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+[data-theme="dark"] h1 em{color:var(--t1);border-bottom-color:var(--b2)}
+[data-theme="dark"] .orb-1{background:radial-gradient(circle,rgba(30,51,82,.5) 0%,transparent 65%)}
+[data-theme="dark"] .orb-2{background:radial-gradient(circle,rgba(20,37,58,.4) 0%,transparent 65%)}
+[data-theme="dark"] .cta{background:linear-gradient(180deg,var(--s1) 0%,rgba(10,21,32,.6) 100%)!important}
+[data-theme="dark"] .feat-card:hover{background:rgba(20,37,58,.98)!important;box-shadow:0 8px 32px rgba(0,0,0,.3)!important}
+[data-theme="dark"] .review:hover{background:rgba(20,37,58,.98)!important;box-shadow:0 8px 24px rgba(0,0,0,.3)!important}
+[data-theme="dark"] .step-card:hover{background:var(--s2)!important}
+[data-theme="dark"] .nav-logo-svg circle,[data-theme="dark"] .nav-logo-svg path{stroke:var(--t1)}
+[data-theme="dark"] .footer svg circle,[data-theme="dark"] .footer svg path{stroke:var(--t1)}
+[data-theme="dark"] [style*="color:#000"]{color:var(--t1)!important}
 </style>
 </head>
 <body>
@@ -317,6 +398,16 @@ nav,section,.logos,.strip,.cta,.footer{position:relative;z-index:1}
       <a href="#reviews">Отзывы</a>
       <a href="#support">Поддержка</a>
     </div>
+    <div class="nav-user" id="navUser">
+      <span class="nav-user-name" id="navUserName"></span>
+      <a href="cabinet.html" class="nav-cabinet-link">Кабинет →</a>
+      <button class="nav-signout" onclick="signOut()">Выйти</button>
+    </div>
+    <button class="nav-auth-btn" id="navAuthBtn" onclick="openAuthModal()">Войти</button>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Тема">
+      <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
     <a class="nav-btn dl-btn" href="#">
       Скачать .exe
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
@@ -687,10 +778,33 @@ nav,section,.logos,.strip,.cta,.footer{position:relative;z-index:1}
       <a href="#reviews">Отзывы</a>
       <a class="dl-btn" href="#">Скачать .exe</a>
       <a href="https://github.com/azbyka009/NEXUS/releases" target="_blank">GitHub</a>
+      <a href="privacy.html">Конфиденциальность</a>
     </div>
     <span class="footer-copy">© 2025 NEXUS</span>
+    <span class="footer-inn">Самозанятый · ИНН 614317719468</span>
   </div>
 </footer>
+
+<!-- AUTH MODAL -->
+<div id="authModal" class="auth-overlay" style="display:none">
+  <div class="auth-box">
+    <button class="auth-close" onclick="closeAuthModal()">✕</button>
+    <div class="auth-title">Войти в NEXUS</div>
+    <div class="auth-tabs">
+      <button class="auth-tab active" data-tab="login" onclick="switchTab('login')">Войти</button>
+      <button class="auth-tab" data-tab="register" onclick="switchTab('register')">Регистрация</button>
+    </div>
+    <form onsubmit="handleEmailAuth(event)">
+      <input class="auth-input" type="email" id="authEmail" placeholder="Email" required>
+      <input class="auth-input" type="password" id="authPassword" placeholder="Пароль" required>
+      <button class="auth-submit" type="submit" id="authSubmitBtn">Войти</button>
+    </form>
+    <p class="auth-error" id="authError"></p>
+    <p class="auth-success" id="authOk"></p>
+    <div class="auth-divider">или</div>
+    <div class="auth-tg-wrap" id="tgWidgetWrap"></div>
+  </div>
+</div>
 
 <script>
 const GITHUB_OWNER = 'azbyka009'
@@ -764,6 +878,158 @@ const stripObs = new IntersectionObserver(entries => {
   })
 }, { threshold: 0.4 })
 document.querySelectorAll('#stats').forEach(el => stripObs.observe(el))
+
+function toggleTheme(){
+  var t=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark'
+  document.documentElement.setAttribute('data-theme',t)
+  localStorage.setItem('nexus-theme',t)
+}
+
+// ── AUTH ────────────────────────────────────────────────────────
+const SUPA_URL = 'https://omzmapjztfphxoymajmk.supabase.co'
+const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9tem1hcGp6dGZwaHhveW1ham1rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIzMzUzMjYsImV4cCI6MjA4NzkxMTMyNn0.Qjwo2bG6EuHzIAuArJB72uPNZ8Fb_KkU0-a2_ZhbM68'
+const TG_EDGE_FN = SUPA_URL + '/functions/v1/tg-auth'
+const sb = window.supabase.createClient(SUPA_URL, SUPA_KEY)
+
+let authTab = 'login'
+
+// Проверить сессию при загрузке
+sb.auth.getSession().then(({ data }) => {
+  if (data.session) showUserInNav(data.session.user)
+})
+
+function showUserInNav(user) {
+  const name = user.user_metadata?.first_name || user.user_metadata?.username || user.email?.split('@')[0] || 'Пользователь'
+  document.getElementById('navUserName').textContent = name
+  document.getElementById('navUser').style.display = 'flex'
+  document.getElementById('navAuthBtn').style.display = 'none'
+}
+
+function hideUserInNav() {
+  document.getElementById('navUser').style.display = 'none'
+  document.getElementById('navAuthBtn').style.display = ''
+}
+
+function openAuthModal() {
+  document.getElementById('authModal').style.display = 'flex'
+  document.body.style.overflow = 'hidden'
+  insertTgWidget()
+}
+
+function closeAuthModal() {
+  document.getElementById('authModal').style.display = 'none'
+  document.body.style.overflow = ''
+  clearAuthMessages()
+}
+
+function switchTab(tab) {
+  authTab = tab
+  document.querySelectorAll('.auth-tab').forEach(el => el.classList.toggle('active', el.dataset.tab === tab))
+  document.getElementById('authSubmitBtn').textContent = tab === 'login' ? 'Войти' : 'Зарегистрироваться'
+  clearAuthMessages()
+}
+
+function clearAuthMessages() {
+  const err = document.getElementById('authError')
+  const ok = document.getElementById('authOk')
+  if (err) { err.style.display = 'none'; err.textContent = '' }
+  if (ok) { ok.style.display = 'none'; ok.textContent = '' }
+}
+
+function showAuthError(msg) {
+  const el = document.getElementById('authError')
+  el.textContent = msg; el.style.display = 'block'
+}
+
+function showAuthOk(msg) {
+  const el = document.getElementById('authOk')
+  el.textContent = msg; el.style.display = 'block'
+}
+
+async function handleEmailAuth(e) {
+  e.preventDefault()
+  clearAuthMessages()
+  const email = document.getElementById('authEmail').value.trim()
+  const password = document.getElementById('authPassword').value
+  const btn = document.getElementById('authSubmitBtn')
+  btn.disabled = true
+
+  try {
+    let res
+    if (authTab === 'login') {
+      res = await sb.auth.signInWithPassword({ email, password })
+    } else {
+      res = await sb.auth.signUp({ email, password })
+    }
+
+    if (res.error) { showAuthError(res.error.message); return }
+
+    if (authTab === 'register' && res.data.user && !res.data.session) {
+      showAuthOk('Письмо с подтверждением отправлено на ' + email)
+      return
+    }
+
+    if (res.data.user) {
+      // Upsert в users (для веб-регистраций без TG)
+      await sb.from('users').upsert(
+        { auth_id: res.data.user.id, email, telegram_id: 0, username: '', first_name: email.split('@')[0] },
+        { onConflict: 'auth_id', ignoreDuplicates: false }
+      ).select()
+      showUserInNav(res.data.user)
+      closeAuthModal()
+    }
+  } catch(err) {
+    showAuthError(String(err))
+  } finally {
+    btn.disabled = false
+  }
+}
+
+async function onTelegramAuth(tg) {
+  clearAuthMessages()
+  try {
+    const res = await fetch(TG_EDGE_FN, {
+      method: 'POST',
+      body: JSON.stringify(tg),
+      headers: { 'Content-Type': 'application/json' }
+    })
+    const data = await res.json()
+    if (data.error) { showAuthError(data.error); return }
+    await sb.auth.setSession({ access_token: data.access_token, refresh_token: data.refresh_token })
+    const { data: { user } } = await sb.auth.getUser()
+    if (user) {
+      showUserInNav(user)
+      closeAuthModal()
+    }
+  } catch(err) {
+    showAuthError('Ошибка подключения: ' + err)
+  }
+}
+
+let tgWidgetInserted = false
+function insertTgWidget() {
+  if (tgWidgetInserted) return
+  tgWidgetInserted = true
+  const s = document.createElement('script')
+  s.async = true
+  s.src = 'https://telegram.org/js/telegram-widget.js?22'
+  s.setAttribute('data-telegram-login', 'ATNexus_Bot')
+  s.setAttribute('data-size', 'large')
+  s.setAttribute('data-onauth', 'onTelegramAuth(user)')
+  s.setAttribute('data-request-access', 'write')
+  s.setAttribute('data-lang', 'ru')
+  document.getElementById('tgWidgetWrap').appendChild(s)
+}
+
+async function signOut() {
+  await sb.auth.signOut()
+  hideUserInNav()
+}
+
+// Закрыть модал по клику на overlay
+document.addEventListener('click', e => {
+  if (e.target.id === 'authModal') closeAuthModal()
+})
 </script>
 </body>
 </html>
