@@ -270,7 +270,7 @@ h1{font-size:42px;font-weight:800;letter-spacing:-.04em;line-height:1.08;text-tr
 
 <script>
 const SUPA_URL = 'https://omzmapjztfphxoymajmk.supabase.co'
-const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9mem1hcGp6dGZwaHhveW1ham1rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIzMzUzMjYsImV4cCI6MjA4NzkxMTMyNn0.Qjwo2bG6EuHzIAuArJB72uPNZ8Fb_KkU0-a2_ZhbM68'
+const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9tem1hcGp6dGZwaHhveW1ham1rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIzMzUzMjYsImV4cCI6MjA4NzkxMTMyNn0.Qjwo2bG6EuHzIAuArJB72uPNZ8Fb_KkU0-a2_ZhbM68'
 const sb = window.supabase.createClient(SUPA_URL, SUPA_KEY)
 
 function toggleTheme(){
@@ -342,6 +342,13 @@ async function buyPlan(plan) {
     btns.forEach(b => { b.disabled = false; b.style.opacity = '' })
   }
 }
+
+window.addEventListener('pageshow', () => {
+  document.querySelectorAll('.plan-btn').forEach(b => {
+    b.disabled = false
+    b.style.opacity = ''
+  })
+})
 </script>
 </body>
 </html>
