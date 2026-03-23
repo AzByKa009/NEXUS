@@ -158,12 +158,6 @@ h1{font-size:42px;font-weight:800;letter-spacing:-.04em;line-height:1.08;text-tr
   <h1>Выбери план</h1>
   <p class="subtitle">Начни бесплатно. Переходи на Pro когда будешь готов масштабировать продажи.</p>
 
-  <div class="billing-toggle">
-    <span class="billing-label active" id="lblMonthly">Понедельно</span>
-    <button class="toggle-switch" id="billingToggle" onclick="toggleBilling()"></button>
-    <span class="billing-label" id="lblYearly">Ежемесячно</span>
-  </div>
-
   <div class="plans">
 
     <!-- FREE -->
@@ -184,13 +178,13 @@ h1{font-size:42px;font-weight:800;letter-spacing:-.04em;line-height:1.08;text-tr
       </div>
     </div>
 
-    <!-- PRO -->
+    <!-- PRO WEEK -->
     <div class="plan-card featured">
       <div class="plan-featured-label">Популярный</div>
       <div class="plan-name">Pro</div>
-      <div class="plan-price" id="proPrice">500 <span>₽</span></div>
-      <div class="plan-period" id="proPeriod">в неделю</div>
-      <button class="plan-btn solid" onclick="buyPlan('pro')">Купить Pro</button>
+      <div class="plan-price">500 <span>₽</span></div>
+      <div class="plan-period">в неделю</div>
+      <button class="plan-btn solid" onclick="buyPlan('pro','week')">Купить на неделю</button>
       <div class="plan-divider"></div>
       <div class="plan-feats">
         <div class="plan-feat"><svg class="feat-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Всё из Free</div>
@@ -199,10 +193,25 @@ h1{font-size:42px;font-weight:800;letter-spacing:-.04em;line-height:1.08;text-tr
         <div class="plan-feat"><svg class="feat-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Парсинг участников</div>
         <div class="plan-feat"><svg class="feat-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Аутрич-кампании</div>
         <div class="plan-feat"><svg class="feat-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>40 сообщений/сутки</div>
-        <div class="plan-feat feat-muted"><svg class="feat-cross" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Несколько аккаунтов TG</div>
       </div>
     </div>
 
+    <!-- PRO MONTH -->
+    <div class="plan-card">
+      <div class="plan-name">Pro</div>
+      <div class="plan-price">1 500 <span>₽</span></div>
+      <div class="plan-period">в месяц</div>
+      <button class="plan-btn outline" onclick="buyPlan('pro','month')">Купить на месяц</button>
+      <div class="plan-divider"></div>
+      <div class="plan-feats">
+        <div class="plan-feat"><svg class="feat-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Всё из Free</div>
+        <div class="plan-feat"><svg class="feat-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>CRM — до 1000 лидов</div>
+        <div class="plan-feat"><svg class="feat-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Авто-ответы на входящие</div>
+        <div class="plan-feat"><svg class="feat-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Парсинг участников</div>
+        <div class="plan-feat"><svg class="feat-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Аутрич-кампании</div>
+        <div class="plan-feat"><svg class="feat-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>40 сообщений/сутки</div>
+      </div>
+    </div>
 
   </div>
 
@@ -261,31 +270,7 @@ function toggleTheme(){
   localStorage.setItem('nexus-theme',t)
 }
 
-let isYearly = false
-
-function toggleBilling(){
-  isYearly = !isYearly
-  const btn = document.getElementById('billingToggle')
-  const lblM = document.getElementById('lblMonthly')
-  const lblY = document.getElementById('lblYearly')
-
-  btn.classList.toggle('on', isYearly)
-  lblM.classList.toggle('active', !isYearly)
-  lblY.classList.toggle('active', isYearly)
-
-  const proPrice = document.getElementById('proPrice')
-  const proPeriod = document.getElementById('proPeriod')
-
-  if (isYearly) {
-    proPrice.innerHTML = '1 500 <span>₽</span>'
-    proPeriod.textContent = 'в месяц'
-  } else {
-    proPrice.innerHTML = '500 <span>₽</span>'
-    proPeriod.textContent = 'в неделю'
-  }
-}
-
-async function buyPlan(plan) {
+async function buyPlan(plan, period) {
   const { data: { session } } = await sb.auth.getSession()
   if (!session) {
     window.location.href = 'index.html'
@@ -302,7 +287,7 @@ async function buyPlan(plan) {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + session.access_token,
       },
-      body: JSON.stringify({ plan, period: isYearly ? 'month' : 'week' }),
+      body: JSON.stringify({ plan, period }),
     })
     const data = await res.json()
     if (data.confirmation_url) {
